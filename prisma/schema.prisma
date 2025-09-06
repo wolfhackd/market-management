@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Vendas {
+  id_venda         String   @id @default(uuid())
+  data_venda       DateTime @default(now())
+  quantidade       Int
+  preco_unitario   Float
+  valor_total      Float
+  //Posso fazer por numeros tambem tipo( 0 debito)
+  forma_pagamento  String
+  status_pagamento String
+  observacoes      String?
+
+  //Relacionamento
+  id_cliente String
+  cliente    Clientes @relation(fields: [id_cliente], references: [id_cliente])
+
+  id_produto String
+  produto    Produtos @relation(fields: [id_produto], references: [id_produto])
+
+  id_operador String
+  Operador    Operador @relation(fields: [id_operador], references: [id_operador])
+}
+
+model Despesas {
+  id_despesa       String   @id @default(uuid())
+  data_despesa     DateTime @default(now())
+  categoria        String
+  descricao        String
+  valor            Float
+  forma_pagamento  String
+  status_pagamento String
+  comprovante      String
+  criado_em        DateTime @default(now())
+
+  //Relacionamento
+  categorias Categorias @relation(fields: [categoria], references: [nome])
+  // id_fornecedor
+}
+
+model Clientes {
+  id_cliente String   @id @default(uuid())
+  nome       String
+  cpf_cnpj   String   @unique
+  telefone   String
+  email      String   @unique
+  endereco   String
+  status     String
+  criado_em  DateTime @default(now())
+
+  //Relacionamento
+  vendas Vendas[]
+}
+
+model Produtos {
+  id_produto  String   @id @default(uuid())
+  nome        String
+  categoria   String
+  preco_venda Float
+  codigo      Int      @unique @default(autoincrement())
+  status      String
+  estoque     Int      @default(0)
+  criado_em   DateTime @default(now())
+
+  //Relacionamento
+  vendas Vendas[]
+}
+
+model Operador {
+  id_operador String   @id @default(uuid())
+  vendas      Vendas[]
+}
+
+model Categorias {
+  id_categoria String     @id @default(uuid())
+  nome         String     @unique
+  Despesas     Despesas[]
+}
