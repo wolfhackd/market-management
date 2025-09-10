@@ -10,9 +10,9 @@ export async function criarCliente(req: FastifyRequest, reply: FastifyReply) {
     //Verificações de campos únicos
     const validacaoCpfCnpj = await prisma.clientes.findUnique({ where: { cpf_cnpj } });
     const validacaoEmail = await prisma.clientes.findUnique({ where: { email } });
-    if (validacaoCpfCnpj && validacaoEmail) {
+    if (validacaoCpfCnpj || validacaoEmail) {
       return reply
-        .status(201)
+        .status(409)
         .send('Esse email ou esse cpf/cnpj já existe no nosso banco de dados');
     }
 
@@ -26,10 +26,10 @@ export async function listarClientes(req: FastifyRequest, reply: FastifyReply) {
   try {
     const listaClientes = await prisma.clientes.findMany();
     if (listaClientes.length < 1) {
-      return reply.status(201).send('Nenhum cliente registrado no banco ainda.');
+      return reply.status(200).send([]);
     }
     return reply.status(201).send(listaClientes);
   } catch {
-    return reply.status(400).send('Não foi possivel criar o cliente.');
+    return reply.status(400).send('Não foi possivel listar os clientes.');
   }
 }
