@@ -4,6 +4,7 @@ import env from './env.js';
 import { healthRoute } from './modules/health/health.routes.js';
 import { produtosRoutes } from './modules/produtos/produto.routes.js';
 import { operadorRoutes } from './modules/operadores/operador.routes.js';
+import { clientesRoutes } from './modules/clientes/cliente.routes.js';
 
 //Configuração
 const PORT = env.PORT;
@@ -13,6 +14,7 @@ app.register(fastifyCors);
 app.register(healthRoute); //Rota de teste de Api
 app.register(produtosRoutes);
 app.register(operadorRoutes);
+app.register(clientesRoutes);
 
 const main = async () => {
   try {

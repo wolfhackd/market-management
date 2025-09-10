@@ -81,6 +81,8 @@ model Produtos {
 
 model Operador {
   id_operador String   @id @default(uuid())
+  nome        String
+  status      String
   vendas      Vendas[]
 }
 
