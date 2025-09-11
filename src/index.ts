@@ -5,6 +5,7 @@ import { healthRoute } from './modules/health/health.routes.js';
 import { produtosRoutes } from './modules/produtos/produto.routes.js';
 import { operadorRoutes } from './modules/operadores/operador.routes.js';
 import { clientesRoutes } from './modules/clientes/cliente.routes.js';
+import { despesasRoutes } from './modules/despesas/despesas.routes.js';
 
 //Configuração
 const PORT = env.PORT;
@@ -15,7 +16,9 @@ app.register(healthRoute); //Rota de teste de Api
 app.register(produtosRoutes);
 app.register(operadorRoutes);
 app.register(clientesRoutes);
+app.register(despesasRoutes);
 
+//função principal
 const main = async () => {
   try {
     await app.listen({ port: 3000, host: '0.0.0.0' });
