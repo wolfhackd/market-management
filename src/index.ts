@@ -6,6 +6,7 @@ import { produtosRoutes } from './modules/produtos/produto.routes.js';
 import { operadorRoutes } from './modules/operadores/operador.routes.js';
 import { clientesRoutes } from './modules/clientes/cliente.routes.js';
 import { despesasRoutes } from './modules/despesas/despesas.routes.js';
+import { vendasRoutes } from './modules/vendas/venda.routes.js';
 
 //Configuração
 const PORT = env.PORT;
@@ -17,6 +18,7 @@ app.register(produtosRoutes);
 app.register(operadorRoutes);
 app.register(clientesRoutes);
 app.register(despesasRoutes);
+app.register(vendasRoutes);
 
 //função principal
 const main = async () => {
