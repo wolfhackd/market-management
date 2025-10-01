@@ -7,10 +7,26 @@ import { operadorRoutes } from './modules/operadores/operador.routes.js';
 import { clientesRoutes } from './modules/clientes/cliente.routes.js';
 import { despesasRoutes } from './modules/despesas/despesas.routes.js';
 import { vendasRoutes } from './modules/vendas/venda.routes.js';
-
+import { fastifySwagger } from '@fastify/swagger';
+import { fastifySwaggerUi } from '@fastify/swagger-ui';
 //Configuração
 const PORT = env.PORT;
 app.register(fastifyCors);
+//Configuração Swagger
+app.register(fastifySwagger, {
+  openapi: {
+    info: {
+      title: 'API de Controle de Vendas',
+      description: 'API para gerenciar produtos, operadores, clientes, despesas e vendas.',
+      version: '1.0.0',
+    },
+  },
+});
+
+//Configuração de Ui INterativa
+app.register(fastifySwaggerUi, {
+  routePrefix: '/docs',
+});
 
 //Rotas
 app.register(healthRoute); //Rota de teste de Api
