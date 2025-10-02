@@ -11,9 +11,11 @@ import { fastifySwagger } from '@fastify/swagger';
 import { fastifySwaggerUi } from '@fastify/swagger-ui';
 //Configuração
 const PORT = env.PORT;
-app.register(fastifyCors);
+
+//Passo o await aqui para evitar problemas de sincronismo
+await app.register(fastifyCors);
 //Configuração Swagger
-app.register(fastifySwagger, {
+await app.register(fastifySwagger, {
   openapi: {
     info: {
       title: 'API de Controle de Vendas',

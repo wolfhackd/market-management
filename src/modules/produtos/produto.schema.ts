@@ -8,3 +8,16 @@ export const produtoSchema = z.object({
 });
 
 export type Produto = z.infer<typeof produtoSchema>;
+
+export const produtoSchemaOutput = z.object({
+  id_produto: z.string().uuid(),
+  nome: z.string(),
+  categoria: z.string(),
+  preco_venda: z.number(),
+  codigo: z.number(),
+  status: z.string(),
+  estoque: z.number(),
+  criado_em: z.string(), // ou z.date() se você converte depois
+});
+
+export type ProdutoOutput = z.infer<typeof produtoSchemaOutput>;

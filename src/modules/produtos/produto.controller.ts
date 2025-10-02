@@ -2,6 +2,8 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 import { produtoSchema } from './produto.schema.js';
 import { prisma } from '../../../prisma/client.js';
 
+//Serios problemas no tratamento de erros
+
 export async function criarProduto(req: FastifyRequest, reply: FastifyReply) {
   try {
     const data = produtoSchema.parse(req.body);
@@ -12,7 +14,7 @@ export async function criarProduto(req: FastifyRequest, reply: FastifyReply) {
   } catch (error) {
     return reply.status(400).send({
       message: 'Erro ao criar produto',
-      error,
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 }
