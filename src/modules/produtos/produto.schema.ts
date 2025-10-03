@@ -5,13 +5,13 @@ export const produtoSchema = z.object({
   categoria: z.string().min(2, 'Categoria inválida'),
   preco_venda: z.number().positive('Preço deve ser maior que zero'),
   status: z.string(),
+  criado_em: z.string().default(() => new Date().toISOString()),
 });
 
 export type Produto = z.infer<typeof produtoSchema>;
 
 export const produtoSchemaOutput = produtoSchema.extend({
   id_produto: z.string().uuid(),
-  criado_em: z.string().datetime(),
   codigo: z.number(),
   estoque: z.number(),
 });

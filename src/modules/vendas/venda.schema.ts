@@ -13,6 +13,7 @@ export const vendaSchema = z.object({
   status_pagamento: z.string(),
   observacoes: z.string().default('-'),
   itens: z.array(itemVendaSchema).min(1),
+  criado_em: z.string().default(() => new Date().toISOString()),
 });
 
 // Logica de vendas com variados items

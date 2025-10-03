@@ -11,6 +11,7 @@ import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import {
   jsonSchemaTransform,
+  jsonSchemaTransformObject,
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod';
@@ -34,6 +35,8 @@ await app.register(fastifySwagger, {
       version: '1.0.0',
     },
   },
+  transform: jsonSchemaTransformObject,
+  // transform: jsonSchemaTransform,
 });
 
 //Configuração de Ui INterativa

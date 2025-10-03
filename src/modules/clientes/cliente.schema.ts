@@ -7,6 +7,11 @@ export const clienteSchema = z.object({
   email: z.email('Deve ser um email'),
   endereco: z.string().min(2, 'O endereço deve conter no mínimo 2 caracteres'),
   status: z.string('').default('ativo'),
+  criado_em: z.string().default(() => new Date().toISOString()),
+});
+
+export const clienteSchemaOutput = clienteSchema.extend({
+  id_cliente: z.string(),
 });
 
 export type Cliente = z.infer<typeof clienteSchema>;

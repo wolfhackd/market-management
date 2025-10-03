@@ -43,6 +43,7 @@ export async function criarVenda(req: FastifyRequest, reply: FastifyReply) {
           status_pagamento: data.status_pagamento,
           observacoes: data.observacoes,
           valor_total,
+          data_venda: new Date().toISOString(),
           itens: {
             create: data.itens.map((item) => ({
               id_produto: item.id_produto,

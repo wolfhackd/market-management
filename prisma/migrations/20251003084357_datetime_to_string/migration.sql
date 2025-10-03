@@ -1,0 +1,15 @@
+-- AlterTable
+ALTER TABLE "Clientes" ALTER COLUMN "criado_em" DROP DEFAULT,
+ALTER COLUMN "criado_em" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "Despesas" ALTER COLUMN "criado_em" DROP DEFAULT,
+ALTER COLUMN "criado_em" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "Produtos" ALTER COLUMN "criado_em" DROP DEFAULT,
+ALTER COLUMN "criado_em" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "Vendas" ALTER COLUMN "data_venda" DROP DEFAULT,
+ALTER COLUMN "data_venda" SET DATA TYPE TEXT;

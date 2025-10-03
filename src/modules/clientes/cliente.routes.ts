@@ -1,6 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { criarCliente, listarClientes } from './cliente.controller.js';
-import { clienteSchema } from './cliente.schema.js';
+import { clienteSchema, clienteSchemaOutput } from './cliente.schema.js';
+import z from 'zod';
 
 export async function clientesRoutes(fastify: FastifyInstance) {
   fastify.post(
@@ -9,9 +10,9 @@ export async function clientesRoutes(fastify: FastifyInstance) {
       schema: {
         summary: 'Criar Cliente',
         tags: ['clientes'],
-        body: clienteSchema,
         response: {
-          200: { description: 'Cliente criado com sucesso', type: 'object' },
+          201: z.toJSONSchema(clienteSchema),
+          400: { describe: 'Erro na criação de cliente' },
         },
       },
     },
@@ -24,7 +25,8 @@ export async function clientesRoutes(fastify: FastifyInstance) {
         summary: 'Lista todos os clientes cadastrados',
         tags: ['clientes'],
         response: {
-          200: { type: 'array', items: { type: 'object' } },
+          200: z.toJSONSchema(clienteSchemaOutput),
+          400: { describe: 'Erro ao listar clientes' },
         },
       },
     },
