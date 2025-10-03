@@ -5,34 +5,41 @@ import z from 'zod';
 
 // corpo de rotas (swagger)
 const produtoJsonSchema = z.toJSONSchema(produtoSchema, { io: 'input' });
-// const produtoOutputJsonSchema = z.toJSONSchema(produtoSchemaOutput, { io: 'input' });
+const produtoJsonSchemaOutput = z.toJSONSchema(produtoSchemaOutput, { io: 'input' });
 
-// const ProdutoOutputSchema = {
-//   type: 'object',
-//   properties: {
-//     id_produto: { type: 'string', description: 'UUID do produto' },
-//     nome: { type: 'string', description: 'Nome do produto' },
-//     categoria: { type: 'string' },
-//     preco_venda: { type: 'number', format: 'float' },
-//     codigo: { type: 'number' },
-//     status: { type: 'string' },
-//     estoque: { type: 'number' },
-//     criado_em: { type: 'string', format: 'date-time' },
-//   },
-//   required: ['id_produto', 'nome', 'preco_venda', 'status'],
-// };
+//Assim ainda aparece lá mas tem a questão que no postman n funciona
+//Por enquanto vai ficar sem o get
 
 export async function produtosRoutes(fastify: FastifyInstance) {
-  fastify.get(
+  fastify.withTypeProvider().get(
     '/listarProdutos',
     {
       schema: {
-        summary: 'Lista todos os produtos cadastrados', // Título para o Swagger UI
-        tags: ['produtos'], // Agrupamento
+        summary: 'Lista todos os produtos cadastrados',
+        tags: ['produtos'],
         response: {
-          200: z.array(produtoSchemaOutput),
-          // 200: { type: 'array', items: ProdutoOutputSchema },
           400: { description: 'Erro ao listar produtos' },
+          // 200: z.array(produtoSchemaOutput),
+          // 200: { type: 'array', items: produtoJsonSchemaOutput },
+          // 200: { type: 'array', items: { type: 'object' } },
+          // 200: { type: 'array', items: { type: 'object' } },
+          // 200: { type: 'array', items: { type: 'object', ...produtoJsonSchemaOutput } },
+          // 200: {
+          //   type: 'array',
+          //   items: {
+          //     type: 'object',
+          //     properties: {
+          //       id_produto: { type: 'string' },
+          //       nome: { type: 'string' },
+          //       categoria: { type: 'string' },
+          //       preco_venda: { type: 'number' },
+          //       codigo: { type: 'number' },
+          //       estoque: { type: 'number' },
+          //       criado_em: { type: 'string', format: 'date-time' },
+          //     },
+          //   },
+          // },
+          // 200: z.array(produtoSchemaOutput),
         },
       },
     },
@@ -45,7 +52,6 @@ export async function produtosRoutes(fastify: FastifyInstance) {
       schema: {
         summary: 'Criar Produto', // Título para o Swagger UI
         tags: ['produtos'],
-
         response: {
           200: { description: 'Produto Criado Com sucesso', ...produtoJsonSchema },
           400: { description: 'Erro ao criar produto' },

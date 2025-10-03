@@ -2,7 +2,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 import { operadorSchema } from './operador.schema.js';
 import { prisma } from '../../../prisma/client.js';
 
-export async function cirarOperador(req: FastifyRequest, reply: FastifyReply) {
+export async function criarOperador(req: FastifyRequest, reply: FastifyReply) {
   try {
     const data = operadorSchema.parse(req.body);
 

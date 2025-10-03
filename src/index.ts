@@ -7,13 +7,24 @@ import { operadorRoutes } from './modules/operadores/operador.routes.js';
 import { clientesRoutes } from './modules/clientes/cliente.routes.js';
 import { despesasRoutes } from './modules/despesas/despesas.routes.js';
 import { vendasRoutes } from './modules/vendas/venda.routes.js';
-import { fastifySwagger } from '@fastify/swagger';
-import { fastifySwaggerUi } from '@fastify/swagger-ui';
+import fastifySwagger from '@fastify/swagger';
+import fastifySwaggerUi from '@fastify/swagger-ui';
+import {
+  jsonSchemaTransform,
+  serializerCompiler,
+  validatorCompiler,
+} from 'fastify-type-provider-zod';
+
 //Configuração
 const PORT = env.PORT;
 
+//Validação e copilador de dados
+app.setValidatorCompiler(validatorCompiler);
+app.setSerializerCompiler(serializerCompiler);
+
 //Passo o await aqui para evitar problemas de sincronismo
 await app.register(fastifyCors);
+
 //Configuração Swagger
 await app.register(fastifySwagger, {
   openapi: {
@@ -26,8 +37,12 @@ await app.register(fastifySwagger, {
 });
 
 //Configuração de Ui INterativa
-app.register(fastifySwaggerUi, {
+await app.register(fastifySwaggerUi, {
   routePrefix: '/docs',
+  uiConfig: {
+    docExpansion: 'list',
+    deepLinking: false,
+  },
 });
 
 //Rotas
@@ -41,10 +56,11 @@ app.register(vendasRoutes);
 //função principal
 const main = async () => {
   try {
-    await app.listen({ port: 3000, host: '0.0.0.0' });
+    await app.listen({ port: PORT, host: '0.0.0.0' }); // Use a variável PORT
     console.log(`🚀 Server rodando em http://localhost:${PORT}`);
-  } catch {
-    console.log('Não foi possível iniciar o servidor');
+    console.log(`📚 Documentação disponível em http://localhost:${PORT}/docs`);
+  } catch (error) {
+    console.log('Não foi possível iniciar o servidor:', error);
   }
 };
 
