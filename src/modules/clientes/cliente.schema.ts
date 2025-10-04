@@ -9,9 +9,3 @@ export const clienteSchema = z.object({
   status: z.string('').default('ativo'),
   criado_em: z.string().default(() => new Date().toISOString()),
 });
-
-export const clienteSchemaOutput = clienteSchema.extend({
-  id_cliente: z.string(),
-});
-
-export type Cliente = z.infer<typeof clienteSchema>;

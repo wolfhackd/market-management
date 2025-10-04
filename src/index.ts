@@ -35,7 +35,7 @@ await app.register(fastifySwagger, {
       version: '1.0.0',
     },
   },
-  transform: jsonSchemaTransformObject,
+  // transform: jsonSchemaTransformObject,
   // transform: jsonSchemaTransform,
 });
 

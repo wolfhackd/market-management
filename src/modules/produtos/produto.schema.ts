@@ -9,11 +9,3 @@ export const produtoSchema = z.object({
 });
 
 export type Produto = z.infer<typeof produtoSchema>;
-
-export const produtoSchemaOutput = produtoSchema.extend({
-  id_produto: z.string().uuid(),
-  codigo: z.number(),
-  estoque: z.number(),
-});
-
-export type ProdutoOutput = z.infer<typeof produtoSchemaOutput>;

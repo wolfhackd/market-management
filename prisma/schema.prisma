@@ -46,8 +46,8 @@ model ItensVenda {
 }
 
 model Despesas {
-  id_despesa       String   @id @default(uuid())
-  data_despesa     DateTime @default(now())
+  id_despesa       String @id @default(uuid())
+  data_despesa     String
   categoria        String
   descricao        String
   valor            Float
