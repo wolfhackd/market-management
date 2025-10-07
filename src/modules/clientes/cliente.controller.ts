@@ -10,10 +10,11 @@ export async function criarCliente(req: FastifyRequest, reply: FastifyReply) {
     //Verificações de campos únicos
     const validacaoCpfCnpj = await prisma.clientes.findUnique({ where: { cpf_cnpj } });
     const validacaoEmail = await prisma.clientes.findUnique({ where: { email } });
-    if (validacaoCpfCnpj || validacaoEmail) {
-      return reply
-        .status(409)
-        .send('Esse email ou esse cpf/cnpj já existe no nosso banco de dados');
+    if (validacaoCpfCnpj) {
+      return reply.status(409).send('Esse cpf/cnpj já existe no nosso banco de dados');
+    }
+    if (validacaoEmail) {
+      return reply.status(409).send('Esse email já existe no nosso banco de dados');
     }
 
     const novoCliente = await prisma.clientes.create({ data });

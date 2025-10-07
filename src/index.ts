@@ -49,6 +49,7 @@ await app.register(fastifySwaggerUi, {
 });
 
 //Rotas
+//Rotas Manualmente testadas
 app.register(healthRoute); //Rota de teste de Api
 app.register(produtosRoutes);
 app.register(operadorRoutes);
@@ -59,7 +60,7 @@ app.register(vendasRoutes);
 //função principal
 const main = async () => {
   try {
-    await app.listen({ port: PORT, host: '0.0.0.0' }); // Use a variável PORT
+    app.listen({ port: PORT, host: '0.0.0.0' }); // Use a variável PORT
     console.log(`🚀 Server rodando em http://localhost:${PORT}`);
     console.log(`📚 Documentação disponível em http://localhost:${PORT}/docs`);
   } catch (error) {

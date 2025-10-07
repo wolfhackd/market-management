@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
@@ -8,9 +9,9 @@ datasource db {
 }
 
 model Vendas {
-  id_venda         String  @id @default(uuid())
-  // data_venda       DateTime @default(now())
-  data_venda       String
+  id_venda         String   @id @default(uuid())
+  data_venda       DateTime @default(now())
+  // data_venda       String
   valor_total      Float
   forma_pagamento  String
   status_pagamento String
@@ -46,7 +47,7 @@ model ItensVenda {
 }
 
 model Despesas {
-  id_despesa       String @id @default(uuid())
+  id_despesa       String   @id @default(uuid())
   data_despesa     String
   categoria        String
   descricao        String
@@ -54,8 +55,8 @@ model Despesas {
   forma_pagamento  String
   status_pagamento String
   comprovante      String
-  // criado_em        DateTime @default(now())
-  criado_em        String
+  criado_em        DateTime @default(now())
+  // criado_em        String
 
   //Relacionamento
   categorias Categorias @relation(fields: [categoria], references: [nome])
@@ -63,15 +64,15 @@ model Despesas {
 }
 
 model Clientes {
-  id_cliente String @id @default(uuid())
+  id_cliente String   @id @default(uuid())
   nome       String
-  cpf_cnpj   String @unique
+  cpf_cnpj   String   @unique
   telefone   String
-  email      String @unique
+  email      String   @unique
   endereco   String
   status     String
-  // criado_em  DateTime @default(now())
-  criado_em  String
+  criado_em  DateTime @default(now())
+  // criado_em  String
 
   //Relacionamento
   itens  ItensVenda[]
@@ -80,15 +81,15 @@ model Clientes {
 
 //Usado para controle de produtos
 model Produtos {
-  id_produto  String @id @default(uuid())
+  id_produto  String   @id @default(uuid())
   nome        String
   categoria   String
   preco_venda Float
-  codigo      Int    @unique @default(autoincrement())
+  codigo      Int      @unique @default(autoincrement())
   status      String
-  estoque     Int    @default(0)
-  // criado_em   DateTime @default(now())
-  criado_em   String
+  estoque     Int      @default(0)
+  criado_em   DateTime @default(now())
+  // criado_em   String
 
   //Relacionamento
   vendas     Vendas[]
